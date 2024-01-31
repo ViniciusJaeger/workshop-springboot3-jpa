@@ -5,6 +5,8 @@ import java.util.Objects;
 
 import com.alpdex.course.entities.pk.OrderItemPK;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -16,6 +18,7 @@ public class OrderItem implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private OrderItemPK id = new OrderItemPK();
 	
 	private Integer quantity;
@@ -25,6 +28,7 @@ public class OrderItem implements Serializable {
 	}
 
 	public OrderItem(Order order, Product product, Integer quantity, Double price) {
+		super();
 		id.setOrder(order);
 		id.setProduct(product);
 		this.quantity = quantity;
@@ -39,6 +43,7 @@ public class OrderItem implements Serializable {
 	public void setOrder(Order order) {
 		id.setOrder(order);
 	}
+	
 	
 	public Product getProduct() {
 		return id.getProduct();
